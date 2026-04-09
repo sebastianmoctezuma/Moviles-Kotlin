@@ -1,7 +1,8 @@
-package com.example.moviles.componentes
+package com.example.moviles.lists
 
+import android.R.attr.onClick
+import android.R.attr.text
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,28 +32,42 @@ import com.example.moviles.R
 
 @Preview(showBackground = true)
 @Composable
-
-fun ProductView(imagen= ) {
-
-    Card(modifier = Modifier.fillMaxWidth().padding(10.dp), colors = CardDefaults.cardColors(containerColor = Color(White)
-    )){
+fun ProductPreview(){
+    val computadora = ProductModel(imagen = R.drawable.fotomac, nombre = "Macbook Air", calificacion = 4.9f, precio = 12000, entrega = "sabado")
+    ProductView(computadora){}
+}
+@Composable
+fun ProductView(producto: ProductModel, selected:()-> Unit){
+    var agregado by remember { mutableStateOf(false) }
+    var resultado by remember { mutableStateOf("") }
+    fun addToCart(): String{
+        agregado=!agregado
+        if(agregado){
+            return "Agregaste ${producto.nombre} al carrito"
+        } else{
+            return ""
+        }
+    }
+    Card(modifier = Modifier.fillMaxWidth().padding(10.dp), colors = CardDefaults.cardColors(containerColor = Color.White)
+    ){
         Column(modifier = Modifier.fillMaxWidth()) {
             Row{
                 Image(
-                    painter = painterResource(producto. imagen),
+                    painter = painterResource(producto.imagen),
                     contentDescription = "imagen de producto",
                     modifier = Modifier
                         .size(120.dp)
                         .align(Alignment.CenterVertically)
                 )
                 Column{
-                    Text(text = "Macbook pro de 14 pulgadas", fontSize = 20.sp)
-                    Text(text = "⭐️4.8 estrellas")
-                    Text(text = "$12,999", fontWeight = FontWeight.Bold)
-                    Text(text = "LLega el viernes")
+                    Text(text =(producto.nombre), fontSize = 20.sp)
+                    Text(text = "⭐️${producto.calificacion} estrellas")
+                    Text(text = "$${producto.precio}", fontWeight = FontWeight.Bold)
+                    Text(text = "LLega el ${producto.entrega}")
                     Spacer(modifier = Modifier.size(10.dp))
                     Button(
-                        onClick = {}, colors = ButtonDefaults.buttonColors(
+                        onClick = { addToCart()
+                                  selected()}, colors = ButtonDefaults.buttonColors(
                             contentColor = Color(0xFF000000),
                             containerColor = Color(0xFFFFD711)
                         )
@@ -57,6 +76,10 @@ fun ProductView(imagen= ) {
                 }
             }
         }
+        Text(resultado)
     }
 
 }
+
+
+
