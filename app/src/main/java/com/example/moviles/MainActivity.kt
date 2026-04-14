@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.moviles.componentes.Botones
 import com.example.moviles.lists.ListView
+import com.example.moviles.retrofit.DogView
+import com.example.moviles.retrofit.DogViewModel
 import com.example.moviles.ui.theme.MovilesTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,12 +23,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MovilesTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    /*Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )*/
-                    ListView()
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPaddig ->
+                    val dogViewModel = DogViewModel()
+                    DogView(dogViewModel)
+
                 }
             }
         }

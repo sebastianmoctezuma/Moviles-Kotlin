@@ -3,7 +3,7 @@ package com.example.moviles.retrofit
 class API {
     private val service =
         RetrofitHelper.getRetrofitService()
-    suspend fun getImagenAleatoria(){
+    suspend fun getImagenAleatoria():String{
         val response =
             service.imagenRandom()
         val msg : String
